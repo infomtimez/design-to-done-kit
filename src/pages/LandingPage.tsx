@@ -39,7 +39,7 @@ export default function LandingPage() {
               <span className="text-gradient-gold">Enterprise Scale</span>
             </h1>
             <p className="text-lg md:text-xl font-body leading-relaxed" style={{ color: 'hsl(43, 50%, 80%)' }}>
-              EngraveNet powers corporate recognition programs with custom engraving, multi-tenant portals, and seamless B2B order management.
+              AwardEngrave powers corporate recognition programs with custom engraving, multi-tenant portals, and seamless B2B order management.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <Link to="/catalog">

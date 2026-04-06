@@ -10,7 +10,7 @@ export function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-navy">
                 <span className="text-xs font-bold font-display" style={{ color: 'hsl(43, 50%, 54%)' }}>E</span>
               </div>
-              <span className="font-display text-lg font-bold text-foreground">EngraveNet</span>
+              <span className="font-display text-lg font-bold text-foreground">AwardEngrave</span>
             </div>
             <p className="text-sm text-muted-foreground font-body">
               Enterprise B2B platform for corporate gifts, engraved items, and employee recognition programs.
@@ -42,7 +42,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-border mt-8 pt-6 text-center text-sm text-muted-foreground font-body">
-          © 2026 EngraveNet. All rights reserved. Product source: JDS Industries Catalog.
+          © 2026 AwardEngrave. All rights reserved.
         </div>
       </div>
     </footer>
