@@ -20,7 +20,7 @@ export function Navbar() {
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-navy">
             <span className="text-sm font-bold text-gradient-gold font-display" style={{ color: 'hsl(43, 50%, 54%)' }}>E</span>
           </div>
-          <span className="font-display text-xl font-bold text-foreground">EngraveNet</span>
+          <span className="font-display text-xl font-bold text-foreground">AwardEngrave</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
