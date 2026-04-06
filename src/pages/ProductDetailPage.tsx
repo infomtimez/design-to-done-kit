@@ -20,9 +20,16 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="container py-20 text-center">
-        <p className="text-muted-foreground font-body">Product not found.</p>
-        <Link to="/catalog"><Button variant="outline" className="mt-4 font-body">Back to Catalog</Button></Link>
+      <div className="min-h-screen bg-[hsl(216,68%,8%)] flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4 opacity-30">📦</div>
+          <p className="text-[hsl(43,50%,60%)] font-body text-lg mb-4">Product not found.</p>
+          <Link to="/catalog">
+            <Button variant="outline" className="font-body border-[hsl(43,50%,54%)]/30 text-[hsl(43,50%,70%)] hover:bg-[hsl(43,50%,54%)]/10">
+              Back to Catalog
+            </Button>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -33,153 +40,243 @@ export default function ProductDetailPage() {
   const categoryIcon = categories.find(c => c.id === product.categoryId)?.icon || '📦';
 
   return (
-    <div className="container py-8">
-      <Link to="/catalog" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground font-body mb-6">
-        <ArrowLeft className="h-4 w-4" /> Back to Catalog
-      </Link>
+    <div className="min-h-screen bg-[hsl(216,68%,8%)]">
+      <div className="container py-8">
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        {/* Left: Product Preview & Configurator */}
-        <div className="space-y-6">
-          <div className="aspect-square rounded-xl border border-border bg-card flex items-center justify-center relative overflow-hidden">
-            <div className="text-8xl">{categoryIcon}</div>
-            {/* Engraving preview overlay */}
-            {engravingText && (
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-navy/80 rounded-lg backdrop-blur">
-                <p className={`text-center text-gold ${engravingFont === 'serif' ? 'font-display' : 'font-body'}`} style={{ letterSpacing: '0.05em' }}>
-                  {engravingText}
-                </p>
-              </div>
-            )}
-          </div>
-          
-          {/* Engraving Configurator */}
-          <div className="rounded-xl border border-border bg-card p-6">
-            <h3 className="font-display text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Type className="h-5 w-5 text-secondary" /> Engraving Configurator
-            </h3>
-            <Tabs defaultValue="text">
-              <TabsList className="w-full">
-                <TabsTrigger value="text" className="flex-1 font-body">Text</TabsTrigger>
-                <TabsTrigger value="logo" className="flex-1 font-body">Logo Upload</TabsTrigger>
-                <TabsTrigger value="preview" className="flex-1 font-body">3D Preview</TabsTrigger>
-              </TabsList>
-              <TabsContent value="text" className="space-y-4 pt-4">
-                <div className="space-y-2">
-                  <Label className="font-body text-sm">Engraving Text</Label>
-                  <Input placeholder="Enter text to engrave..." value={engravingText} onChange={e => setEngravingText(e.target.value)} className="font-body" />
-                  <p className="text-xs text-muted-foreground font-body">Max 500 characters. Preview updates live above.</p>
-                </div>
-                <div className="space-y-2">
-                  <Label className="font-body text-sm">Font Style</Label>
-                  <div className="flex gap-2">
-                    {[{ val: 'serif', label: 'Classic Serif' }, { val: 'sans', label: 'Modern Sans' }, { val: 'script', label: 'Script' }].map(f => (
-                      <Button key={f.val} variant={engravingFont === f.val ? "secondary" : "outline"} size="sm" onClick={() => setEngravingFont(f.val)} className="font-body text-xs flex-1">
-                        {f.label}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="font-body text-sm">Engraving Position</Label>
-                  <div className="flex gap-2">
-                    <Button variant="secondary" size="sm" className="font-body text-xs flex-1">Main Plate</Button>
-                    <Button variant="outline" size="sm" className="font-body text-xs flex-1">Small Plate</Button>
-                  </div>
-                </div>
-              </TabsContent>
-              <TabsContent value="logo" className="pt-4">
-                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
-                  <Image className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-sm font-body text-muted-foreground">Drag & drop your logo or click to upload</p>
-                  <p className="text-xs text-muted-foreground font-body mt-1">SVG, PNG, or JPG — Auto-vectorization included</p>
-                  <Button variant="outline" size="sm" className="font-body mt-4">Choose File</Button>
-                </div>
-              </TabsContent>
-              <TabsContent value="preview" className="pt-4">
-                <div className="aspect-video rounded-lg bg-gradient-to-b from-muted to-muted/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-5xl mb-3">{categoryIcon}</div>
-                    <p className="text-sm font-body text-muted-foreground">3D Preview — React Three Fiber</p>
-                    <p className="text-xs font-body text-muted-foreground">Rotate, zoom, and inspect your engraving</p>
-                  </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
+        {/* Breadcrumb */}
+        <Link
+          to="/catalog"
+          className="inline-flex items-center gap-1.5 text-sm text-[hsl(43,50%,55%)] hover:text-[hsl(43,50%,75%)] font-body mb-8 transition-colors group"
+        >
+          <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+          Back to Catalog
+        </Link>
 
-        {/* Right: Product Details */}
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Badge variant="outline" className="font-body text-xs">{product.categoryName}</Badge>
-              <span className="text-xs text-muted-foreground font-body">{product.sku}</span>
-              {product.isSustainable && (
-                <Badge className="bg-green-100 text-green-700 font-body text-xs"><Leaf className="h-3 w-3 mr-1" /> Eco-Friendly</Badge>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+          {/* ── Left: Preview & Configurator ── */}
+          <div className="space-y-6">
+
+            {/* Product Preview */}
+            <div className="aspect-square rounded-2xl border border-[hsl(216,40%,20%)] bg-[hsl(216,60%,12%)] flex items-center justify-center relative overflow-hidden">
+              {/* subtle grid pattern */}
+              <div className="absolute inset-0 opacity-5" style={{
+                backgroundImage: 'linear-gradient(hsl(43,50%,54%) 1px, transparent 1px), linear-gradient(90deg, hsl(43,50%,54%) 1px, transparent 1px)',
+                backgroundSize: '40px 40px'
+              }} />
+              <div className="text-9xl relative z-10 drop-shadow-2xl">{categoryIcon}</div>
+              {engravingText && (
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-[hsl(216,68%,8%)]/80 rounded-xl backdrop-blur border border-[hsl(43,50%,54%)]/20">
+                  <p
+                    className={`text-center text-[hsl(43,50%,54%)] ${engravingFont === 'serif' ? 'font-display' : 'font-body'}`}
+                    style={{ letterSpacing: '0.08em', fontSize: '0.95rem' }}
+                  >
+                    {engravingText}
+                  </p>
+                </div>
               )}
             </div>
-            <h1 className="font-display text-3xl font-bold text-foreground">{product.name}</h1>
-            <p className="font-body text-muted-foreground mt-2 leading-relaxed">{product.description}</p>
+
+            {/* Engraving Configurator */}
+            <div className="rounded-2xl border border-[hsl(216,40%,20%)] bg-[hsl(216,60%,12%)] p-6">
+              <h3 className="font-display text-lg font-semibold text-[hsl(43,50%,92%)] mb-5 flex items-center gap-2">
+                <Type className="h-5 w-5 text-[hsl(43,50%,54%)]" />
+                Engraving Configurator
+              </h3>
+              <Tabs defaultValue="text">
+                <TabsList className="w-full bg-[hsl(216,68%,8%)] border border-[hsl(216,40%,20%)]">
+                  <TabsTrigger value="text" className="flex-1 font-body text-[hsl(43,50%,60%)] data-[state=active]:bg-[hsl(216,50%,20%)] data-[state=active]:text-[hsl(43,50%,90%)]">Text</TabsTrigger>
+                  <TabsTrigger value="logo" className="flex-1 font-body text-[hsl(43,50%,60%)] data-[state=active]:bg-[hsl(216,50%,20%)] data-[state=active]:text-[hsl(43,50%,90%)]">Logo Upload</TabsTrigger>
+                  <TabsTrigger value="preview" className="flex-1 font-body text-[hsl(43,50%,60%)] data-[state=active]:bg-[hsl(216,50%,20%)] data-[state=active]:text-[hsl(43,50%,90%)]">3D Preview</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="text" className="space-y-4 pt-5">
+                  <div className="space-y-2">
+                    <Label className="font-body text-sm text-[hsl(43,50%,70%)]">Engraving Text</Label>
+                    <Input
+                      placeholder="Enter text to engrave..."
+                      value={engravingText}
+                      onChange={e => setEngravingText(e.target.value)}
+                      className="font-body bg-[hsl(216,68%,8%)] border-[hsl(216,40%,22%)] text-[hsl(43,50%,90%)] placeholder:text-[hsl(43,50%,35%)] focus:border-[hsl(43,50%,54%)]/60"
+                    />
+                    <p className="text-xs text-[hsl(43,50%,45%)] font-body">Max 500 characters. Preview updates live above.</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="font-body text-sm text-[hsl(43,50%,70%)]">Font Style</Label>
+                    <div className="flex gap-2">
+                      {[{ val: 'serif', label: 'Classic Serif' }, { val: 'sans', label: 'Modern Sans' }, { val: 'script', label: 'Script' }].map(f => (
+                        <Button
+                          key={f.val}
+                          variant={engravingFont === f.val ? "secondary" : "outline"}
+                          size="sm"
+                          onClick={() => setEngravingFont(f.val)}
+                          className={`font-body text-xs flex-1 transition-all ${
+                            engravingFont === f.val
+                              ? 'bg-gradient-gold text-[hsl(216,68%,14%)] border-transparent'
+                              : 'border-[hsl(216,40%,22%)] text-[hsl(43,50%,65%)] hover:border-[hsl(43,50%,54%)]/40 bg-transparent'
+                          }`}
+                        >
+                          {f.label}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="font-body text-sm text-[hsl(43,50%,70%)]">Engraving Position</Label>
+                    <div className="flex gap-2">
+                      <Button variant="secondary" size="sm" className="font-body text-xs flex-1 bg-gradient-gold text-[hsl(216,68%,14%)] border-transparent">Main Plate</Button>
+                      <Button variant="outline" size="sm" className="font-body text-xs flex-1 border-[hsl(216,40%,22%)] text-[hsl(43,50%,65%)] bg-transparent hover:border-[hsl(43,50%,54%)]/40">Small Plate</Button>
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="logo" className="pt-5">
+                  <div className="border-2 border-dashed border-[hsl(216,40%,22%)] hover:border-[hsl(43,50%,54%)]/30 rounded-xl p-10 text-center transition-colors">
+                    <Image className="h-10 w-10 text-[hsl(43,50%,40%)] mx-auto mb-3" />
+                    <p className="text-sm font-body text-[hsl(43,50%,60%)]">Drag & drop your logo or click to upload</p>
+                    <p className="text-xs text-[hsl(43,50%,40%)] font-body mt-1">SVG, PNG, or JPG — Auto-vectorization included</p>
+                    <Button variant="outline" size="sm" className="font-body mt-4 border-[hsl(43,50%,54%)]/30 text-[hsl(43,50%,70%)] hover:bg-[hsl(43,50%,54%)]/10">
+                      Choose File
+                    </Button>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="preview" className="pt-5">
+                  <div className="aspect-video rounded-xl bg-gradient-to-b from-[hsl(216,50%,16%)] to-[hsl(216,68%,8%)] flex items-center justify-center border border-[hsl(216,40%,20%)]">
+                    <div className="text-center">
+                      <div className="text-6xl mb-3 opacity-60">{categoryIcon}</div>
+                      <p className="text-sm font-body text-[hsl(43,50%,55%)]">3D Preview — React Three Fiber</p>
+                      <p className="text-xs font-body text-[hsl(43,50%,40%)] mt-1">Rotate, zoom, and inspect your engraving</p>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
 
-          <div className="flex items-baseline gap-3">
-            <span className="font-display text-4xl font-bold text-foreground">${unitPrice.toFixed(2)}</span>
-            <span className="text-sm text-muted-foreground font-body">per unit</span>
-          </div>
+          {/* ── Right: Product Details ── */}
+          <div className="space-y-7">
 
-          {/* Variants */}
-          <div className="space-y-3">
-            <Label className="font-body text-sm font-medium">Select Variant</Label>
-            <div className="grid grid-cols-3 gap-2">
-              {product.variants.map((v, i) => (
-                <button key={v.sku} onClick={() => setSelectedVariant(i)}
-                  className={`rounded-lg border p-3 text-left transition-all ${i === selectedVariant ? 'border-secondary bg-secondary/5 ring-1 ring-secondary' : 'border-border hover:border-secondary/40'}`}>
-                  <p className="font-body text-sm font-medium text-foreground">{v.name}</p>
-                  <p className="text-xs text-muted-foreground font-body">
-                    {v.priceModifier > 0 ? `+$${v.priceModifier.toFixed(2)}` : v.priceModifier < 0 ? `-$${Math.abs(v.priceModifier).toFixed(2)}` : 'Base price'}
-                  </p>
-                  <p className="text-xs text-muted-foreground font-body">{v.stock} in stock</p>
-                </button>
+            {/* Title & Badges */}
+            <div>
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
+                <Badge variant="outline" className="font-body text-xs border-[hsl(43,50%,54%)]/30 text-[hsl(43,50%,60%)] bg-[hsl(43,50%,54%)]/5">
+                  {product.categoryName}
+                </Badge>
+                <span className="text-xs text-[hsl(43,50%,40%)] font-body font-mono">{product.sku}</span>
+                {product.isSustainable && (
+                  <Badge className="bg-green-900/40 text-green-400 border border-green-500/20 font-body text-xs">
+                    <Leaf className="h-3 w-3 mr-1" /> Eco-Friendly
+                  </Badge>
+                )}
+              </div>
+              <h1 className="font-display text-4xl font-bold text-[hsl(43,50%,95%)]">{product.name}</h1>
+              <p className="font-body text-[hsl(43,50%,62%)] mt-3 leading-relaxed">{product.description}</p>
+            </div>
+
+            {/* Price */}
+            <div className="flex items-baseline gap-3">
+              <span className="font-display text-5xl font-bold text-[hsl(43,50%,92%)]">${unitPrice.toFixed(2)}</span>
+              <span className="text-sm text-[hsl(43,50%,50%)] font-body">per unit</span>
+            </div>
+
+            {/* Variants */}
+            <div className="space-y-3">
+              <Label className="font-body text-sm font-medium text-[hsl(43,50%,70%)]">Select Variant</Label>
+              <div className="grid grid-cols-3 gap-2">
+                {product.variants.map((v, i) => (
+                  <button
+                    key={v.sku}
+                    onClick={() => setSelectedVariant(i)}
+                    className={`rounded-xl border p-3 text-left transition-all ${
+                      i === selectedVariant
+                        ? 'border-[hsl(43,50%,54%)] bg-[hsl(43,50%,54%)]/10 ring-1 ring-[hsl(43,50%,54%)]/30'
+                        : 'border-[hsl(216,40%,22%)] bg-[hsl(216,60%,12%)] hover:border-[hsl(43,50%,54%)]/40 hover:bg-[hsl(216,55%,15%)]'
+                    }`}
+                  >
+                    <p className="font-body text-sm font-medium text-[hsl(43,50%,90%)]">{v.name}</p>
+                    <p className="text-xs text-[hsl(43,50%,55%)] font-body">
+                      {v.priceModifier > 0 ? `+$${v.priceModifier.toFixed(2)}` : v.priceModifier < 0 ? `-$${Math.abs(v.priceModifier).toFixed(2)}` : 'Base price'}
+                    </p>
+                    <p className="text-xs text-[hsl(43,50%,45%)] font-body">{v.stock} in stock</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Quantity */}
+            <div className="space-y-2">
+              <Label className="font-body text-sm font-medium text-[hsl(43,50%,70%)]">
+                Quantity <span className="text-[hsl(43,50%,45%)] font-normal">(min: {product.minOrderQty})</span>
+              </Label>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity(Math.max(product.minOrderQty, quantity - 1))}
+                  className="border-[hsl(216,40%,22%)] text-[hsl(43,50%,70%)] hover:bg-[hsl(43,50%,54%)]/10 hover:border-[hsl(43,50%,54%)]/40 bg-transparent"
+                >
+                  -
+                </Button>
+                <Input
+                  type="number"
+                  value={quantity}
+                  onChange={e => setQuantity(Math.max(product.minOrderQty, parseInt(e.target.value) || 1))}
+                  className="w-20 text-center font-body bg-[hsl(216,60%,12%)] border-[hsl(216,40%,22%)] text-[hsl(43,50%,90%)] focus:border-[hsl(43,50%,54%)]/60"
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="border-[hsl(216,40%,22%)] text-[hsl(43,50%,70%)] hover:bg-[hsl(43,50%,54%)]/10 hover:border-[hsl(43,50%,54%)]/40 bg-transparent"
+                >
+                  +
+                </Button>
+              </div>
+            </div>
+
+            {/* Specs */}
+            <div className="rounded-xl border border-[hsl(216,40%,20%)] bg-[hsl(216,60%,12%)] p-5 space-y-3">
+              {[
+                { label: 'Material', value: product.material },
+                { label: 'Engraving', value: product.engravingMethods.join(', ') },
+                { label: 'Lead Time', value: `${product.leadTimeDays} business days` },
+              ].map(row => (
+                <div key={row.label} className="flex justify-between text-sm font-body">
+                  <span className="text-[hsl(43,50%,50%)]">{row.label}</span>
+                  <span className="text-[hsl(43,50%,85%)] font-medium">{row.value}</span>
+                </div>
               ))}
+              <div className="flex justify-between text-sm font-body border-t border-[hsl(216,40%,20%)] pt-3 mt-1">
+                <span className="text-[hsl(43,50%,85%)] font-semibold">Total</span>
+                <span className="font-display text-2xl font-bold text-[hsl(43,50%,54%)]">${totalPrice.toFixed(2)}</span>
+              </div>
             </div>
-          </div>
 
-          {/* Quantity */}
-          <div className="space-y-2">
-            <Label className="font-body text-sm font-medium">Quantity (min: {product.minOrderQty})</Label>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="icon" onClick={() => setQuantity(Math.max(product.minOrderQty, quantity - 1))}>-</Button>
-              <Input type="number" value={quantity} onChange={e => setQuantity(Math.max(product.minOrderQty, parseInt(e.target.value) || 1))} className="w-20 text-center font-body" />
-              <Button variant="outline" size="icon" onClick={() => setQuantity(quantity + 1)}>+</Button>
+            {/* Actions */}
+            <div className="flex gap-3">
+              <Button
+                className="flex-1 bg-gradient-gold text-[hsl(216,68%,14%)] font-body font-semibold hover:opacity-90 shadow-lg shadow-[hsl(43,50%,54%)]/20"
+                size="lg"
+                onClick={() => toast({ title: 'Added to cart!', description: `${product.name} (${variant.name}) x${quantity}` })}
+              >
+                <ShoppingCart className="h-4 w-4 mr-2" /> Add to Cart
+              </Button>
+              <Link to="/cart" className="flex-1">
+                <Button
+                  variant="outline"
+                  className="w-full font-body border-[hsl(43,50%,54%)]/30 text-[hsl(43,50%,75%)] hover:bg-[hsl(43,50%,54%)]/10 hover:border-[hsl(43,50%,54%)]/50"
+                  size="lg"
+                >
+                  Buy Now
+                </Button>
+              </Link>
             </div>
-          </div>
 
-          {/* Specs */}
-          <div className="rounded-lg border border-border bg-muted/50 p-4 space-y-2">
-            <div className="flex justify-between text-sm font-body"><span className="text-muted-foreground">Material</span><span className="text-foreground font-medium">{product.material}</span></div>
-            <div className="flex justify-between text-sm font-body"><span className="text-muted-foreground">Engraving</span><span className="text-foreground font-medium">{product.engravingMethods.join(', ')}</span></div>
-            <div className="flex justify-between text-sm font-body"><span className="text-muted-foreground">Lead Time</span><span className="text-foreground font-medium">{product.leadTimeDays} business days</span></div>
-            <div className="flex justify-between text-sm font-body border-t border-border pt-2 mt-2">
-              <span className="text-foreground font-semibold">Total</span>
-              <span className="font-display text-xl font-bold text-foreground">${totalPrice.toFixed(2)}</span>
+            <div className="flex items-center gap-5 text-xs text-[hsl(43,50%,45%)] font-body pt-1">
+              <span className="flex items-center gap-1.5"><Package className="h-3.5 w-3.5" /> Free shipping 50+ units</span>
+              <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> Net-30 available</span>
             </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex gap-3">
-            <Button className="flex-1 bg-gradient-gold text-primary font-body font-semibold hover:opacity-90" size="lg"
-              onClick={() => toast({ title: 'Added to cart!', description: `${product.name} (${variant.name}) x${quantity}` })}>
-              <ShoppingCart className="h-4 w-4 mr-2" /> Add to Cart
-            </Button>
-            <Link to="/cart" className="flex-1">
-              <Button variant="outline" className="w-full font-body" size="lg">Buy Now</Button>
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-4 text-xs text-muted-foreground font-body">
-            <span className="flex items-center gap-1"><Package className="h-3 w-3" /> Free shipping 50+ units</span>
-            <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> Net-30 available</span>
           </div>
         </div>
       </div>
